@@ -88,12 +88,46 @@
                
       <hr>  
       
-      
-      <img src="{{STATIC_ROOT}}\food\static\pics\icon.png" alt="Mountain View"  >
-      <img src="{{STATIC_ROOT}}/food/static/pics/icon.png" alt="Mountain View"  >
-      <img data-src="holder.js/200x200" class="img-thumbnail" alt="">
-      <img data-src="holder.js/200x200" class="img-thumbnail" alt="">
+      <!--
+	<figure>
+      		<img src="{{STATIC_ROOT}}\food\static\pics\icon.png" alt="Mountain View"  >
+     		 <img src="{{STATIC_ROOT}}/food/static/pics/icon.png" alt="Mountain View"  >
+	  
 
+    		<img data-src="holder.js/200x200" class="img-thumbnail" alt="">
+   		 <figcaption>{{ restaurant_name }}</figcaption>
+		 <figcaption>{{ restaurant_description }}</figcaption>
+	
+    		<img data-src="holder.js/200x200" class="img-thumbnail" alt="">
+   		 <figcaption>{{ restaurant_name1 }}</figcaption>
+	</figure>-->
+      
+    <div class="container">
+        <div class="stickerHolder">
+                <div class="sticker">
+                        <!--<img src="{{STATIC_ROOT}}/food/static/pics/icon.png" alt="Mountain View"  > -->
+                        <img src="{{ food.food_photo.url }}" class="img-thumbnail" alt="">
+                        <p>{{ food.food_name }}</p>
+                        <p>{{ restaurant.restaurant_name }}</p>
+                </div>
+                <div class="s shadow295"></div>
+                
+                <div class="sticker">
+                        <img src="{{ food1.food_photo.url }}" class="img-thumbnail" alt="">
+                        <p>{{ food1.food_name }}</p>
+                        <p>{{ restaurant1.restaurant_name }}</p>
+                </div>
+                <div class="s shadow295"></div>
+                
+                <div class="sticker">
+                        <img src="{{ food2.food_photo.url }}" class="img-thumbnail" alt="">
+                        <p>{{ food2.food_name }}</p>
+                        <p>{{ restaurant2.restaurant_name }}</p>
+                </div>
+                <div class="s shadow295"></div>
+        </div>
+      
+     </div> 
     </div>  
       
     <!-- Bootstrap core JavaScript
