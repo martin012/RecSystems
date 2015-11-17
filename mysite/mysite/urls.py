@@ -18,15 +18,13 @@ from django.contrib import admin
 from django.conf import settings 
 
 urlpatterns = [
-    url(r'^account/', include('django.contrib.auth.urls')),
-    url(r'^acc/', include('django.contrib.auth.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^food/', include('food.urls')),
     #url(r'^static/', settings.STATIC_URLS)
     url(r'^food/static/(?P<path>.*)$', 'django.views.static.serve', {
             'document_root': settings.STATIC_ROOT,
         }),
-        
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),    
         
 ]
 

@@ -50,7 +50,19 @@
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
+        
+          <form class="navbar-form navbar-right"  action="user_view" method="get">{% csrf_token %}
+            <div class="form-group">
+              <input type="text" id="email" value="" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" id="password" placeholder="Password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        
         </div><!--/.nav-collapse -->
+        
       </div>
     </nav>
    
@@ -84,13 +96,10 @@
         </a>
       </div>
      
-        <span class="glyphicon glyphicon-pushpin" aria-hidden="true"> Location : {{ city }}</span>
+        <span class="glyphicon glyphicon-pushpin" aria-hidden="true"> Location : {{country}}, {{ city }}</span>
                
       <hr>  
       
-      
-      <img src="{{STATIC_ROOT}}\food\static\pics\icon.png" alt="Mountain View"  >
-      <img src="{{STATIC_ROOT}}/food/static/pics/icon.png" alt="Mountain View"  >
       <img data-src="holder.js/200x200" class="img-thumbnail" alt="">
       <img data-src="holder.js/200x200" class="img-thumbnail" alt="">
 
