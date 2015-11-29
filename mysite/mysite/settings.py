@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'food'
+    'food',
+    'likert_field',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -142,9 +143,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Path to directory of static files that are pictures in this case.
 STATIC_PICS = os.path.join(STATIC_ROOT, 'pics')
 
+STATIC_STARS = os.path.join(STATIC_ROOT, 'star')
+
 # Additional locations of static files
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'bootstrap'),
+    
 )
 
 
