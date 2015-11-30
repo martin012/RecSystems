@@ -7,7 +7,23 @@ import socket
 import netifaces
 from .models import Restaurant, Food
 
+from django.contrib.auth import authenticate, login
 
+def user_view(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return render(request, 'food/templates/user_view.html')
+
+        else:
+            return render(request, 'food/templates/login.html')
+    else:
+        return render(request, 'food/templates/login.html')
+     
 def index(request):
     
     ####################################################

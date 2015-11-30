@@ -59,12 +59,12 @@
             <li><a href="#contact">Contact</a></li>
           </ul>
             
-          <form class="navbar-form navbar-right"  action="user_view" method="get">{% csrf_token %}
+          <form class="navbar-form navbar-right"  action="user_view" method="post"> {% csrf_token %}
             <div class="form-group">
-              <input type="text" id="email" value="" placeholder="Email" class="form-control">
+              <input type="text" id="username" name="username" placeholder="Username" class="form-control">
             </div>
             <div class="form-group">
-              <input type="password" id="password" placeholder="Password" class="form-control">
+              <input type="password" id="password" name="password" placeholder="Password" class="form-control">
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
           </form>  
@@ -136,10 +136,12 @@
       </div>
    </div>
    
-            <div class = "col-sm-6 col-md-3">
+      <div class = "col-sm-6 col-md-3">
       <div class = "thumbnail">
          <img src = "{{ food1.food_photo.url }}" alt = "">
+         <input id="input-21e" value="0" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
       </div>
+          
       
       <div class = "caption">
          <h3>{{ food1.food_name }}</h3>
@@ -154,13 +156,14 @@
       
       <div class = "caption">
          <h3>{{ food2.food_name }}</h3>
-         <p>{{ restaurant2.restaurant_name }}</p>          
+         <p>{{ restaurant2.restaurant_name }}</p>   
+         <input id="input-21e" value="0" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
       </div>
    </div>
    
           <div class = "col-sm-6 col-md-3">
       <div class = "thumbnail">
-         <img src = "{{ food2.food_photo.url }}" alt = "" class="img-rounded">
+         <img src = "{{ food2.food_photo.url }}" alt = "" class="img-rounded">      
       </div>
       
       <div class = "caption">
