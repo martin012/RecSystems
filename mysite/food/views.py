@@ -6,13 +6,21 @@ import pygeoip
 import socket 
 import netifaces
 from .models import Restaurant, Food
+import sys
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'food/templates/logout.html')
+
 
 def user_view(request):
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
+    
+    print (sys.stderr, user)
     
     if user is not None:
         if user.is_active:
@@ -60,9 +68,7 @@ def basic(request):
 # Method gets record about current location of user
 # Record(type dict) contains information about country, city and others.  
 def get_location():
-    
-    # 
-    
+   
     af_inet_adresses = []
 
     for interface in netifaces.interfaces():
