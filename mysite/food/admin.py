@@ -1,12 +1,17 @@
 from django.contrib import admin
- 
-from .models import Food, Restaurant
+from nested_inline.admin import NestedStackedInline, NestedModelAdmin 
+from .models import Food, Restaurant, Tag
 
-class FoodInline(admin.TabularInline):
+class TagInline(NestedStackedInline):
+    model = Tag
+    extra = 3
+
+class FoodInline(NestedStackedInline):
     model = Food
-    extra = 10
+    extra = 3
+    inlines = [TagInline]
 
-class RestaurantAdmin(admin.ModelAdmin):
+class RestaurantAdmin(NestedModelAdmin):
     fieldsets = [
               (None, {'fields': ['restaurant_name','restaurant_description', 'restaurant_photo']})
     ]

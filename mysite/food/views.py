@@ -52,10 +52,15 @@ def basic(request):
     restaurant2 = Restaurant.objects.get(pk=3)
 
     food = restaurant.food_set.all().get(pk=1)
-    food1 = restaurant1.food_set.all().get(pk=4)
-    food2 = restaurant2.food_set.all().get(pk=8)
+    food1 = restaurant.food_set.all().get(pk=2)
+    food2 = restaurant.food_set.all().get(pk=3)
+
+    tags = food.tag_set.all()
+    tags1 = food1.tag_set.all()
+    tags2 = food2.tag_set.all()
+    
  
-    return render(request, 'food/templates/index.html', {'city' : city,'restaurant': restaurant, 'restaurant1': restaurant1, 'restaurant2': restaurant2,'food': food, 'food1': food1, 'food2': food2 ,'STATIC_PICS' : settings.STATIC_PICS })
+    return render(request, 'food/templates/index.html', {'city' : city,'restaurant': restaurant, 'restaurant1': restaurant1, 'restaurant2': restaurant2,'food': food, 'food1': food1, 'food2': food2, 'tags': tags, 'tags1': tags1 , 'tags2': tags2, 'STATIC_PICS' : settings.STATIC_PICS })
 
 # Method gets record about current location of user
 # Record(type dict) contains information about country, city and others.  

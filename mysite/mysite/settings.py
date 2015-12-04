@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'food',
-    'likert_field',
+    'nested_inline',
 ]
 
 MIDDLEWARE_CLASSES = [

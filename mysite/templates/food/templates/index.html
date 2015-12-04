@@ -107,21 +107,56 @@
                
       <hr>  
       
-      <!--
-	<figure>
-      		<img src="{{STATIC_ROOT}}\food\static\pics\icon.png" alt="Mountain View"  >
-     		 <img src="{{STATIC_ROOT}}/food/static/pics/icon.png" alt="Mountain View"  >
-	  
+  
+      <div class="container marketing">
 
-    		<img data-src="holder.js/200x200" class="img-thumbnail" alt="">
-   		 <figcaption>{{ restaurant_name }}</figcaption>
-		 <figcaption>{{ restaurant_description }}</figcaption>
-	
-    		<img data-src="holder.js/200x200" class="img-thumbnail" alt="">
-   		 <figcaption>{{ restaurant_name1 }}</figcaption>
-	</figure>-->
-    
-        <div class = "row">
+      <!-- Three columns of text below the carousel -->
+      <div class="row">
+        <div class="col-lg-4">
+          <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image">
+          <h2>{{ food.food_name }}</h2>       
+                <div>
+                    {% for tag in tags %}
+                         <span class="label label-default">{{ tag.tag_name }}</span>
+                    {% endfor %}
+                </div>
+          <p>{{ restaurant.restaurant_name }}</p>
+       
+          <input id="input-21e" value="3" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
+
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        
+        <div class="col-lg-4">
+          <img class="img-rounded" src="{{ food1.food_photo.url }}" alt="Generic placeholder image" >
+          <h2>{{ food1.food_name }}</h2>
+                 <div>
+                    {% for tag in tags1 %}
+                         <span class="label label-default">{{ tag.tag_name }}</span>
+                    {% endfor %}
+                </div>  
+          <p>{{ restaurant.restaurant_name }}</p>
+          <input id="input-21e" value="3" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        
+        <div class="col-lg-4">
+          <img class="img-rounded" src="{{ food2.food_photo.url }}" alt="Generic placeholder image">
+          <h2>{{ food2.food_name }}</h2>
+                <div>
+                    {% for tag in tags2 %}
+                         <span class="label label-default">{{ tag.tag_name }}</span>
+                    {% endfor %}
+                </div>
+          <p>{{ restaurant.restaurant_name }}</p>
+          <input id="input-21e" value="0" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+      </div>
+      
+      
+    <!--  <div class = "row">
    
    <div class = "col-sm-6 col-md-3">
       <div class = "thumbnail">
@@ -172,8 +207,9 @@
       </div>
    </div>
    
+
       
-    </div>  
+    </div>  -->
       
     <!-- Bootstrap core JavaScript
     ================================================== -->
