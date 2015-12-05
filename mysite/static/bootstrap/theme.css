@@ -30,4 +30,10 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.img-responsive-height
+{
+  display: block;
+  width: auto;
+  max-height: 100%
+}
 

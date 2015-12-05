@@ -13,11 +13,11 @@ def user_view(request):
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
-    
+   
     if user is not None:
         if user.is_active:
             login(request, user)
-            return render(request, 'food/templates/user_view.html')
+            return render(request, 'food/templates/user_view.html', {'user': user})
 
         else:
             return render(request, 'food/templates/login.html')
