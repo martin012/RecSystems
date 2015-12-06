@@ -13,7 +13,7 @@ class FoodInline(NestedStackedInline):
 
 class RestaurantAdmin(NestedModelAdmin):
     fieldsets = [
-              (None, {'fields': ['restaurant_name','restaurant_description', 'restaurant_photo']})
+              (None, {'fields': ['restaurant_name','restaurant_description', 'restaurant_address', 'restaurant_photo']})
     ]
     inlines = [FoodInline]
 

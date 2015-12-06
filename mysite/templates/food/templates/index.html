@@ -113,16 +113,16 @@
       <!-- Three columns of text below the carousel -->
       <div class="row">
           
-            {% for restaurant, food, tags in list %}  
+            {% for food in list %}  
             <div class="col-lg-4">  
                 <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image">
                 <h2>{{ food.food_name }}</h2>       
                       <div>
-                          {% for tag in tags %}
+                          {% for tag in food.tag_set.all %}
                                <span class="label label-default">{{ tag.tag_name }}</span>
                           {% endfor %}
                       </div>
-                <p>{{ restaurant.restaurant_name }}</p>
+                <p>{{ food.restaurant.restaurant_name }}</p>
 
                 <input id="input-21e" value="{{food.food_rating}}" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >          
                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
@@ -133,36 +133,45 @@
                   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
-                        <div class="modal-header">
+                       <!-- <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title" id="myModalLabel">{{ restaurant.restaurant_name }}</h4>
-                        </div>
+                          <h4 class="modal-title" id="myModalLabel">{{ food.restaurant.restaurant_name }}</h4>
+                        </div>-->
                         <div class="modal-body">
-                          <img class="img" src="{{ restaurant.restaurant_photo.url }}" alt="Generic placeholder image"  height="300" width="500">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                         <img class="img" src="{{ food.restaurant.restaurant_photo.url }}" alt="Generic placeholder image" height="300" width="500">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img class="img-thumbnail" src="{{ food.food_photo.url }}" alt="Generic placeholder image">
+                                        <p>
+                                            Here you can find your food
+                                        </p>
+                                        <h2>{{food.restaurant.restaurant_name}}</h2>
+                                        <p>
+                                           <strong> Address: </strong> {{ food.restaurant.restaurant_address}}
+                                        </p>
+                                    </div>
+                                </div>
+                           
                         </div>
                         <div class="modal-footer">
-
+                            <h4 style="text-align:center; margin-bottom:30px;">You can be also interest in:</h4>       
                           <div class="container marketing">
                           <!-- Three columns of text below the carousel -->
                           <div class="row">   
-                                <div class="col-lg-4">
-                              <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image" >
-                              <h2>{{ food.food_name }}</h2>
-                              <input id="input-21e" value="3" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
-                               <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
-                                 View details &raquo;
-                              </button>
-                          </div>
+                              {% for food in list %} 
+                                <div class="col-sm-4">
+                                    <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image" height="150" width="150">
+                                    <h4>{{ food.food_name }}</h4>
+                                    <input id="input-21e" value="{{food.food_rating}}" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+                                        View details &raquo;
+                                     </button>
+                                 </div>
+                              {% endfor %}
 
-
-                          <div class="col-lg-4">
-                              <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image" >
-                              <h2>{{ food.food_name }}</h2>
-                              <input id="input-21e" value="3" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
-                               <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
-                                 View details &raquo;
-                              </button>  
-                          </div>
+                              
                               </div>
                           </div>
                         </div>
@@ -178,60 +187,11 @@
     </div>
       
       
-    <!--  <div class = "row">
    
-   <div class = "col-sm-6 col-md-3">
-      <div class = "thumbnail">
-         <img src = "{{ food.food_photo.url }}" alt = "" class="img-rounded">
-      </div>
-      
-      <div class = "caption">
-         <input id="input-21e" value="0" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
-         <h3>{{ food.food_name }}</h3>
-         <p>{{ restaurant.restaurant_name }}</p>     
-         
-      </div>
-   </div>
-   
-      <div class = "col-sm-6 col-md-3">
-      <div class = "thumbnail">
-         <img src = "{{ food1.food_photo.url }}" alt = "">
-         <input id="input-21e" value="0" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
-      </div>
-          
-      
-      <div class = "caption">
-         <h3>{{ food1.food_name }}</h3>
-         <p>{{ restaurant1.restaurant_name }}</p>           
-      </div>
-   </div>
-            
-            <div class = "col-sm-6 col-md-3">
-      <div class = "thumbnail">
-         <img src = "{{ food2.food_photo.url }}" alt = "">
-      </div>
-      
-      <div class = "caption">
-         <h3>{{ food2.food_name }}</h3>
-         <p>{{ restaurant2.restaurant_name }}</p>   
-         <input id="input-21e" value="0" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
-      </div>
-   </div>
-   
-          <div class = "col-sm-6 col-md-3">
-      <div class = "thumbnail">
-         <img src = "{{ food2.food_photo.url }}" alt = "" class="img-rounded">      
-      </div>
-      
-      <div class = "caption">
-         <h3>{{ food2.food_name }}</h3>
-         <p>{{ restaurant2.restaurant_name }}</p>         
-      </div>
-   </div>
    
 
       
-    </div>  -->
+   
       
     <!-- Bootstrap core JavaScript
     ================================================== -->

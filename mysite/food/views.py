@@ -47,23 +47,11 @@ def basic(request):
     country = records.get('country_name')
     city = records.get('city')
 
-    restaurant = Restaurant.objects.get(pk=1)
-    restaurant1 = Restaurant.objects.get(pk=2)
-    restaurant2 = Restaurant.objects.get(pk=3)
+    food = Food.objects.get(pk=1)
+    food1 = Food.objects.get(pk=2)
+    food2 = Food.objects.get(pk=14)
 
-    food = restaurant.food_set.all().get(pk=1)
-    food1 = restaurant.food_set.all().get(pk=2)
-    food2 = restaurant.food_set.all().get(pk=3)
-
-    tags = food.tag_set.all()
-    tags1 = food1.tag_set.all()
-    tags2 = food2.tag_set.all()
-    
-    r_list = [restaurant, restaurant1, restaurant2]
-    f_list = [food, food1, food2]
-    t_list = [tags, tags1, tags2]
-
-    list = zip(r_list, f_list, t_list)
+    list = [food, food1, food2]
 
     return render(request, 'food/templates/index.html', {'city' : city, 'list': list, 'STATIC_PICS' : settings.STATIC_PICS })
 
