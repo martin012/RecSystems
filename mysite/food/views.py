@@ -59,8 +59,13 @@ def basic(request):
     tags1 = food1.tag_set.all()
     tags2 = food2.tag_set.all()
     
- 
-    return render(request, 'food/templates/index.html', {'city' : city,'restaurant': restaurant, 'restaurant1': restaurant1, 'restaurant2': restaurant2,'food': food, 'food1': food1, 'food2': food2, 'tags': tags, 'tags1': tags1 , 'tags2': tags2, 'STATIC_PICS' : settings.STATIC_PICS })
+    r_list = [restaurant, restaurant1, restaurant2]
+    f_list = [food, food1, food2]
+    t_list = [tags, tags1, tags2]
+
+    list = zip(r_list, f_list, t_list)
+
+    return render(request, 'food/templates/index.html', {'city' : city, 'list': list, 'STATIC_PICS' : settings.STATIC_PICS })
 
 # Method gets record about current location of user
 # Record(type dict) contains information about country, city and others.  
