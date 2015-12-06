@@ -7,7 +7,11 @@ import socket
 import netifaces
 from .models import Restaurant, Food
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'food/templates/logout.html')
 
 def user_view(request):
     username = request.POST['username']
