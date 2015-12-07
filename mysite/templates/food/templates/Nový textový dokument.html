@@ -123,3 +123,138 @@
             </div>
         </div><!-- /.col-lg-4 -->
        
+        
+        
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Example of Bootstrap 3 Modal Events</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#myModal").on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget);  // Button that triggered the modal
+        var titleData = button.data('title'); // Extract value from data-* attributes
+        var title = button.data('report');
+        $(this).find('.modal-title').text(titleData + ' Form');
+        $(this).find('.modal-body input').val(title);
+    });
+});
+</script>
+<style type="text/css">
+    .bs-example{
+    	margin: 20px;
+    }
+</style>
+</head>
+<body>
+<div class="bs-example">
+    <!-- Button HTML (to Trigger Modal) -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"  data-title="Feedback" data-report="back">Feedback</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-title="Report Error"  data-report="error">Report Error</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-title="Contact Us"  data-report="us">Contact Us</button>
+    
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Modal Window</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">Email:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>     
+</body>
+</html>                                		
+
+<script src="js/jquery-2.0.3.min.js" type="text/javascript"></script>
+
+<?php
+    $sql = "SELECT * FROM portfolio";
+    $query = mysqli_query ($conn, $sql);
+?>
+
+<div class="col-md-12">
+    <h1>Portfolio</h1>
+
+    <table class="table">
+
+        <?php while ($row = mysqli_fetch_assoc($query)) { ?>
+
+            <tr>
+                <td>
+                    <br>
+                        <a data-toggle="modal" data-target="#myModal1">
+                            <img src="<?php echo $row ['pic']; ?>" width="200" height="150" class="getSrc">
+                        </a>
+                    <br><br>
+                </td>
+                <td>
+                    <h4><a href="<?php echo $row ['link']; ?>" target="_blank"><?php echo $row ['projectName']; ?></a></h4>
+                    <?php echo $row ['description']; ?><br><br>
+
+                    <strong class="text-warning"><?php echo $row ['note']; ?></strong>
+                </td>
+            </tr>
+
+        <?php } ?>
+
+    </table>
+
+</div>
+
+<script type="text/javascript">
+     $('.getSrc').click(function() {
+        var src =$(this).attr('src');
+
+        $('.showPic').attr('src') = src;
+     });
+</script>
+
+<!-- MODAL --> 
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="col-md-12">
+
+                <img src="" class="showPic">
+            </div>
+        </div> 
+    </div>
+</div>
+
+ 4
+down vote
+	
+
+The problem is on this line:
+
+$('.showPic').attr('src') = src;
+
+You can set the src like this:
+
+$('.showPic').attr('src', src);
+
+Here is a fiddle of how it should be: http://jsfiddle.net/ZU3xx/2/
