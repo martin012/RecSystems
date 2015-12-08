@@ -1,6 +1,6 @@
 from django.contrib import admin
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin 
-from .models import Food, Restaurant, Tag
+from .models import Food, Restaurant, Tag,UserItem
 
 class TagInline(NestedStackedInline):
     model = Tag
@@ -17,4 +17,10 @@ class RestaurantAdmin(NestedModelAdmin):
     ]
     inlines = [FoodInline]
 
+class UserItemAdmin(NestedModelAdmin):
+    fieldsets = [
+              (None, {'fields': ['user', 'food', 'rating']})
+    ]
+
 admin.site.register(Restaurant, RestaurantAdmin) 
+admin.site.register(UserItem, UserItemAdmin) 

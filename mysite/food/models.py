@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Restaurant(models.Model):
     restaurant_name = models.CharField(max_length=50)
@@ -28,3 +29,10 @@ class Tag(models.Model):
 
     def __str__(self):              # __unicode__ on Python 2
         return self.tag_name
+
+class UserItem(models.Model):
+    user = models.ForeignKey(User) 
+    food = models.ForeignKey(Food)
+    rating = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
+
+   

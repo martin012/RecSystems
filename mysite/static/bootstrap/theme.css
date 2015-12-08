@@ -21,6 +21,26 @@ body {
   margin-bottom: 20px;
   text-align: center;
 }
+.marketing .col-md-8 {
+  margin-bottom: 20px;
+  img-align: center;
+}
+.marekting .col-md-8 img.center{
+  display: block;
+  margin: 0 auto;
+}
+.marekting .col-md-4 img.center{
+  display: block;
+  margin: 0 auto;
+}
+.marketing .col-md-4 p {
+  margin-bottom: 20px;
+  text-align:center;
+}
+.marketing .col-md-4 h2 {
+  margin-bottom: 20px;
+  text-align:center;
+}
 .marketing h2 {
   font-weight: normal;
 }
@@ -44,6 +64,19 @@ body {
   text-align: center;
 }
 
+.marketing .col-sm-8 p {
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+.marketing .col-sm-8 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .img-responsive-height {
   display: block;
   width: auto;
@@ -53,5 +86,6 @@ body {
 .modal-dialog {
     width: 90%;
 }
+
 
 
