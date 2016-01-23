@@ -23,4 +23,4 @@ class UserItemAdmin(NestedModelAdmin):
     ]
 
 admin.site.register(Restaurant, RestaurantAdmin) 
-admin.site.register(UserItem, UserItemAdmin) 
+admin.site.register(UserItem, UserItemAdmin)
