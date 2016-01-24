@@ -11,6 +11,28 @@ from django.db.models import get_model
 
 from django.contrib.auth import authenticate, login, logout
 
+def compute_average_of_foods():
+    for food in Food.objects.all():
+        sum = 0.0;
+        count = 0
+        useritems = UserItem.objects.filter(food = food)
+        
+        # compute average for specified item
+        for item1 in useritems:
+            sum = sum + item1.rating
+            count = count + 1
+        try:
+            food.food_rating = round(float(sum / float(count)), 1)
+            food.save()
+        except:
+            # if it is exception division by zero, just skip it
+            pass
+    
+
+def best_rated_foods():
+    foods = Food.objects.order_by('-food_rating')
+    return foods[0:4]
+
 def logout_view(request):
     logout(request)
     return render(request, 'food/templates/logout.html')
@@ -28,7 +50,7 @@ def rate_food(request):
             food = Food.objects.get(id = food)
                
             try:
-                useritemexist = UserItem.objects.get(user=user, food=food)
+                UserItem.objects.get(user=user, food=food)
                 return render(request, 'food/templates/ratingno.html', {'food': food})
             except UserItem.DoesNotExist:
                 useritem = UserItem(user=user, food=food, rating=rating)
@@ -51,7 +73,8 @@ def user_view(request):
             food2 = Food.objects.get(pk=14)
             food3 = Food.objects.get(pk=9)
 
-            list = [food, food1, food2, food3]    
+            list = [food, food1, food2, food3]   
+            
 
             return render(request, 'food/templates/user_view.html', {'list': list, 'STATIC_PICS' : settings.STATIC_PICS })
 
@@ -84,15 +107,19 @@ def basic(request):
     
     country = records.get('country_name')
     city = records.get('city')
+    
+    compute_average_of_foods()
 
-    food = Food.objects.get(pk=1)
-    food1 = Food.objects.get(pk=2)
-    food2 = Food.objects.get(pk=14)
-    food3 = Food.objects.get(pk=9)
+    #food = Food.objects.get(pk=1)
+    #food1 = Food.objects.get(pk=2)
+    #food2 = Food.objects.get(pk=14)
+    #food3 = Food.objects.get(pk=9)
 
-    list = [food, food1, food2, food3]
+    #list = [food, food1, food2, food3]
+    
+    list1 =  best_rated_foods()
 
-    return render(request, 'food/templates/index.html', {'city' : city, 'list': list, 'STATIC_PICS' : settings.STATIC_PICS })
+    return render(request, 'food/templates/index.html', {'city' : city, 'list': list1, 'STATIC_PICS' : settings.STATIC_PICS })
 
 # Method gets record about current location of user
 # Record(type dict) contains information about country, city and others.  

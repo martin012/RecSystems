@@ -87,7 +87,7 @@
                           {% endfor %}
                       </div>
                 <p>{{ food.restaurant.restaurant_name }}</p>
-                <input id="input-22" value="{{food.food_rating}}"  type="number" class="rating" data-readonly="true" min=0 max=5 step=0.5 data-size="xs" >
+                <input id="input-22" value="{{food.food_rating}}"  type="number" class="rating" data-readonly="true" min=0 max=5 step=0.1 data-size="xs" >
                 <button type="button"   class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-food_name="{{food.food_name}}" data-food_image="{{food.food_photo.url}}" data-restaurant_image="{{food.restaurant.restaurant_photo.url}}" data-restaurant_address="{{food.restaurant.restaurant_address}}" data-restaurant_name="{{food.restaurant.restaurant_name}}">    
                    View details &raquo;
                 </button>
@@ -141,7 +141,7 @@
                                     <p>
                                          Address: {{food1.restaurant.restaurant_address}} 
                                     </p> 
-                                    <input id="input-21" value="{{food1.food_rating}}" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" >
+                                    <input id="input-21" value="{{food1.food_rating}}" type="number" class="rating" min=0 max=5 step=0.1 data-size="xs" >
                                  </div>
                                 {% endfor %} 
                               </div>

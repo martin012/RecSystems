@@ -19,7 +19,7 @@ class Restaurant(models.Model):
 class Food(models.Model):
     food_name = models.CharField(max_length=50)
     food_photo = models.ImageField(upload_to="images/food/")
-    food_rating = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
+    food_rating = models.FloatField(default=0)
     restaurant = models.ForeignKey(Restaurant)
 
     def __str__(self):              # __unicode__ on Python 2
@@ -32,16 +32,10 @@ class Tag(models.Model):
     def __str__(self):              # __unicode__ on Python 2
         return self.tag_name
 
-class Rating(models.Model):
-    rating_value = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
-
-    def __str__(self):              # __unicode__ on Python 2
-        return self.rating_value
-
 class UserItem(models.Model):
     user = models.ForeignKey(User) 
     food = models.ForeignKey(Food)
-    rating = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
+    rating = models.FloatField(default=0)
 
     def __str__(self):
         return "User: {0}, Food: {1}, Rating: {2}".format(self.user.username, self.food.food_name, self.rating)
