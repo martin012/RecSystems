@@ -60,7 +60,7 @@
 
         
             <div class="col-lg-3">  
-                <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image">
+                <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image" height="170" width="170">
                 <h2 >{{ food.food_name }}</h2>       
                       <div>
                           {% for tag in food.tag_set.all %}

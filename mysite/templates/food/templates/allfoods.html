@@ -45,15 +45,14 @@
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
-            
-          <form class="navbar-form navbar-right" action="show_all_foods" method="POST"  id="post-form2"> {% csrf_token %}
-                <button type="submit" class="btn btn-success">Show all foods!</button>
-          </form>   
-           
+          <div  class="navbar-form navbar-right">
+          <button class="btn btn-success"  onClick="javascript:history.go(-1);"> Back!</button>    
+          </div>
           <form class="navbar-form navbar-right"  action="logout_view" > {% csrf_token %}
               <button type="submit" class="btn btn-success">Logout</button>
-          </form>  
-            
+          </form> 
+          
+              
         </div><!--/.nav-collapse -->
       </div>
     </nav>
@@ -63,90 +62,30 @@
       
         
       <div class="container marketing"> 
-      <div class="row">  
-                                
+              
 
         {% for food in list %} 
+            {% if forloop.counter0|divisibleby:"3" %}<div class="row">{% endif %}
             <div class="col-md-4">  
-                <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image">
+                <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image"  height="170" width="170">
                 <h2 >{{ food.food_name }}</h2>       
                       <div>
                           {% for tag in food.tag_set.all %}
                                <span class="label label-default">{{ tag.tag_name }}</span>
                           {% endfor %}
                       </div>
-                <p>{{ food.restaurant.restaurant_name }}</p>
+                <h5>{{ food.restaurant.restaurant_name }}</h5>
                 <form class="rate" action="rate_food" method="POST"  id="post-form"> {% csrf_token %}
                 <input id="input-22" value="{{food.food_rating}}"  type="number" class="rating" min=0 max=5 step=0.1 data-size="xs" >
                 <input type="hidden" value="{{food.id}}" name="in-food">
                 <input type="hidden" value="" name="in-rating" class="in-rating">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-food_name="{{food.food_name}}" data-food_image="{{food.food_photo.url}}" data-restaurant_image="{{food.restaurant.restaurant_photo.url}}" data-restaurant_address="{{food.restaurant.restaurant_address}}" data-restaurant_name="{{food.restaurant.restaurant_name}}">    
-                   View details &raquo;
-                </button>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-            </div>         
+            </div>   
+            {% if forloop.last or forloop.counter|divisibleby:"3" %}</div>{% endif %}
         {% endfor %}
-      </div> 
-       
+          
     </div>
-  
-         
-                  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                      
-                      <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-body">
-                                
-                               <div class="container marketing">
-                                <div class="row">  
-                                    <div class="col-sm-8">
-                                         <img class="showPicRest" src="" alt="Generic placeholder image"  height="300" width="500">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <img class="img-thumbnail" src="" alt="Generic placeholder image">
-                                        <p>
-                                            Here you can find your food  
-                                        </p>
-                                        <h2>
-                                            Text
-                                        </h2>
-                                        <p class="resAddress" class="form-control" id="recipient-name">
-                                           <strong> Address: </strong> 
-                                        </p>
-                                    </div>             
-                                 </div>  
-                                </div>   
-                        </div>
-                          
-                            <div class="modal-footer">
-                            <h4 style="text-align:center; margin-bottom:30px;">You can be also interest in:</h4>       
-                            <div class="container marketing">
-                             <div class="row">   
-                                {% for food1 in list %} 
-                                <div class="col-sm-4">
-                                    <img class="img-rounded" src="{{ food1.food_photo.url }}" alt="Generic placeholder image" height="150" width="150">
-                                    <h4>{{ food1.food_name }}</h4>
-                                    <div>
-                                         {% for tag in food1.tag_set.all %}
-                                             <span class="label label-default">{{ tag.tag_name }}</span>
-                                         {% endfor %}
-                                    </div>
-                                    <h5>{{ food1.restaurant.restaurant_name }}</h5>
-                                    <p>
-                                         Address: {{food1.restaurant.restaurant_address}} 
-                                    </p> 
-                                    <input id="input-21" value="{{food1.food_rating}}" type="number" class="rating" min=0 max=5 step=0.1 data-size="xs" >
-                                 </div>
-                                {% endfor %} 
-                              </div>
-                          </div>
-                        </div>
-                      </div>  
-                      </div>
-                    </div>
-    
-        
     </div>  
     
       
@@ -169,20 +108,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {        
-            $("#myModal").on('show.bs.modal', function(event){
-                var button = $(event.relatedTarget);  // Button that triggered the modal
-                var food_name = button.data('food_name'); // Extract value from data-* attributes
-                var food_image = button.data('food_image');
-                var restaurant_name = button.data('restaurant_name');
-                var restaurant_image = button.data('restaurant_image'); 
-                var restaurant_address = button.data('restaurant_address');
-                $(this).find('.modal-title').text(food_name);
-                $(this).find('.modal-body h2').text(restaurant_name);
-                $(this).find('.showPicRest').attr('src', restaurant_image);
-                $(this).find('.img-thumbnail').attr('src', food_image);
-                $(this).find('.resAddress').text("Address: " + restaurant_address);  
-            });
-            
             $(".rating").on("rating.clear", function(event) { 
                 alert("Your rating is reset")
             });

@@ -54,13 +54,13 @@
       </div>
     </nav>
     
-    <div class="container marketing"> 
-      <div class="row">  
+    <div class="container marketing1" > 
+      <div class="row"  >  
                                 
 
         
-            <div class="col-lg-3">  
-                <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image">
+            <!--<div class="col-lg-3">  -->
+                <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image" height="170" width="170">
                 <h2 >{{ food.food_name }}</h2>       
                       <div>
                           {% for tag in food.tag_set.all %}
@@ -75,7 +75,7 @@
                 <button class="btn btn-primary"  onClick="javascript:history.go(-1);"> Back!</button>
                 <h5>You already rate this food!</h5>
      
-            </div>         
+            <!--</div>    -->     
       </div>     
     </div>
    
