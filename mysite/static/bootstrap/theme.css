@@ -41,6 +41,16 @@ body {
   margin-bottom: 20px;
   text-align:center;
 }
+
+.marketing .col-md-4 button {
+  margin-bottom: 10px;
+  text-align:center;
+}
+
+.marketing .col-lg-3 button {
+  margin-bottom: 10px;
+  text-align:center;
+}
 .marketing .col-md-4 h2 {
   margin-bottom: 20px;
   text-align:center;

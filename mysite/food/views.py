@@ -67,6 +67,12 @@ def show_all_foods(request):
             list_of_foods = Food.objects.all()
             return render(request, 'food/templates/allfoods.html', {'list': list_of_foods, 'STATIC_PICS' : settings.STATIC_PICS })
         
+def similar_foods(request):
+        if request.POST:   
+            food = request.POST['in-food']
+            food1 = Food.objects.get(id = food)
+            list_of_foods = sim_item_tags(food1)
+            return render(request, 'food/templates/simfoods.html', {'food': food1, 'list': list_of_foods, 'STATIC_PICS' : settings.STATIC_PICS })          
 
 def user_view(request):
     username = request.POST['username']
@@ -127,14 +133,14 @@ def basic(request):
     #list = [food, food1, food2, food3]
     
     best_rated_food =  best_rated_foods()
-    food1_sim_item = sim_item_tags(best_rated_food[0])
-    food2_sim_item = sim_item_tags(best_rated_food[1])
-    food3_sim_item = sim_item_tags(best_rated_food[2]) 
-    food4_sim_item = sim_item_tags(best_rated_food[3])
+    #food1_sim_item = sim_item_tags(best_rated_food[0])
+    #food2_sim_item = sim_item_tags(best_rated_food[1])
+    #food3_sim_item = sim_item_tags(best_rated_food[2]) 
+    #food4_sim_item = sim_item_tags(best_rated_food[3])
     #similar_zip_foods = zip(best_rated_food1, best_rated_food2, best_rated_food3, best_rated_food4)
     #finalzip = zip(best_rated_foods, similar_zip_foods)
     
-    return render(request, 'food/templates/index.html', {'city' : city, 'list': best_rated_food, 'food1_sim_item': food1_sim_item, 'food2_sim_item': food2_sim_item, 'food3_sim_item': food3_sim_item, 'food4_sim_item': food4_sim_item,'STATIC_PICS' : settings.STATIC_PICS })
+    return render(request, 'food/templates/index.html', {'city' : city, 'list': best_rated_food,'STATIC_PICS' : settings.STATIC_PICS })
 
 # Method gets record about current location of user
 # Record(type dict) contains information about country, city and others.  
