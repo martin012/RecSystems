@@ -6,6 +6,7 @@ import pygeoip
 import socket 
 import netifaces
 import math
+from math import sqrt
 from .models import Restaurant, Food, UserItem, User, Tag
 from django.db.models import get_model
 
@@ -89,15 +90,23 @@ def user_view(request):
     if user is not None:
         if user.is_active:
             login(request, user)
-            
-            food = Food.objects.get(pk=1)
-            food1 = Food.objects.get(pk=2)
-            food2 = Food.objects.get(pk=14)
 
-            list = [food, food1, food2]   
+            dataset = get_dataset()
+            foods_recommend = user_recommendations(dataset, user.username)
             
-
-            return render(request, 'food/templates/user_view.html', {'list': list, 'STATIC_PICS' : settings.STATIC_PICS })
+            food_count = len(foods_recommend)
+            
+            list = []
+            
+            i = 0
+            for f in foods_recommend:
+                list.append(Food.objects.get(food_name = foods_recommend[i]))
+                i += 1
+                
+            # Algoritmus ak najde malo vhodnych vysledkov
+            
+            
+            return render(request, 'food/templates/user_view.html', {'list': list[0:4], 'STATIC_PICS' : settings.STATIC_PICS })
 
         else:
             return render(request, 'food/templates/login.html')
@@ -234,4 +243,96 @@ def similar_items(items):
     sim_items = []
     for item1 in items:
         sim_items.append(sim_item_tags(item1))
-    return sim_items    
+    return sim_items   
+
+def user_recommendations(dataset, person):
+
+	# Gets recommendations for a person by using a weighted average of every other user's rankings
+	totals = {}
+	simSums = {}
+	rankings_list =[]
+	for other in dataset:
+		# don't compare me to myself
+		if other == person:
+			continue
+		sim = pearson_correlation(dataset, person, other)
+		#print ">>>>>>>",sim
+
+		# ignore scores of zero or lower
+		if sim <=0: 
+			continue
+		for item in dataset[other]:
+
+			# only score movies i haven't seen yet
+			if item not in dataset[person] or dataset[person][item] == 0:
+
+			# Similrity * score
+				totals.setdefault(item,0)
+				totals[item] += dataset[other][item]* sim
+				# sum of similarities
+				simSums.setdefault(item,0)
+				simSums[item]+= sim
+
+		# Create the normalized list
+
+	rankings = [(total/simSums[item],item) for item,total in totals.items()]
+	rankings.sort()
+	rankings.reverse()
+	# returns the recommended items
+	recommendataions_list = [recommend_item for score,recommend_item in rankings]
+	return recommendataions_list
+ 
+def pearson_correlation(dataset, person1,person2):
+
+	# To get both rated items
+	both_rated = {}
+	for item in dataset[person1]:
+		if item in dataset[person2]:
+			both_rated[item] = 1
+
+	number_of_ratings = len(both_rated)		
+	
+	# Checking for number of ratings in common
+	if number_of_ratings == 0:
+		return 0
+
+	# Add up all the preferences of each user
+	person1_preferences_sum = sum([dataset[person1][item] for item in both_rated])
+	person2_preferences_sum = sum([dataset[person2][item] for item in both_rated])
+
+	# Sum up the squares of preferences of each user
+	person1_square_preferences_sum = sum([pow(dataset[person1][item],2) for item in both_rated])
+	person2_square_preferences_sum = sum([pow(dataset[person2][item],2) for item in both_rated])
+
+	# Sum up the product value of both preferences for each item
+	product_sum_of_both_users = sum([dataset[person1][item] * dataset[person2][item] for item in both_rated])
+
+	# Calculate the pearson score
+	numerator_value = product_sum_of_both_users - (person1_preferences_sum*person2_preferences_sum/number_of_ratings)
+	denominator_value = sqrt((person1_square_preferences_sum - pow(person1_preferences_sum,2)/number_of_ratings) * (person2_square_preferences_sum -pow(person2_preferences_sum,2)/number_of_ratings))
+	if denominator_value == 0:
+		return 0
+	else:
+		r = numerator_value/denominator_value
+		return r 
+
+def get_dataset():
+    
+    users = User.objects.all()
+
+    user_foods_dict = {} 
+
+    for usr in users:
+
+        user_foods = UserItem.objects.filter(user = usr)
+        food_rating_dict = {}
+        
+        for usr_foods in user_foods: 
+            food_name = usr_foods.food.food_name
+            rating = usr_foods.rating
+            
+            food_rating_dict.update({food_name : rating})
+    
+        user_foods_dict.update({usr.username : food_rating_dict})
+        
+    return user_foods_dict
