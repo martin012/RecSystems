@@ -81,6 +81,10 @@
                 <input type="hidden" value="" name="in-rating" class="in-rating">
                 <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
+                <form action="similar_foods" method="post" id="post-sim-food"> {% csrf_token %}
+                    <input type="hidden" value="{{food.id}}" name="in-food">
+                    <button type="submit" class="btn btn-primary">Similar Foods &raquo;</button>
+                </form>
             </div>   
             {% if forloop.last or forloop.counter|divisibleby:"3" %}</div>{% endif %}
         {% endfor %}
