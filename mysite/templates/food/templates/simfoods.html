@@ -79,7 +79,7 @@
                 <h5>{{ food.restaurant.restaurant_name }}</h5>
                 <input id="input-22" value="{{food.food_rating}}" data-readonly="true" type="number" class="rating" min=0 max=5 step=0.1 data-size="xs" >
                  <div class="row">  
-                <button type="button"   class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-sim_food="{{sim_foods}}" data-food_name="{{food.food_name}}" data-food_image="{{food.food_photo.url}}" data-restaurant_image="{{food.restaurant.restaurant_photo.url}}" data-restaurant_address="{{food.restaurant.restaurant_address}}" data-restaurant_name="{{food.restaurant.restaurant_name}}">    
+                <button type="button"   class="btn btn-primary" data-toggle="modal" data-target="#myModal"  data-food_name="{{food.food_name}}" data-food_image="{{food.food_photo.url}}" data-restaurant_image="{{food.restaurant.restaurant_photo.url}}" data-restaurant_address="{{food.restaurant.restaurant_address}}" data-restaurant_name="{{food.restaurant.restaurant_name}}">    
                    View details &raquo;
                 </button>
                 <form action="similar_foods" method="post" id="post-sim-food"> {% csrf_token %}
@@ -91,6 +91,40 @@
             
         {% endfor %}
           </div>
+        
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                      
+                      <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                                
+                               <div class="container marketing">
+                                <div class="row">  
+                                    <div class="col-sm-8">
+                                         <img class="showPicRest" src="" alt="Generic placeholder image"  height="300" width="500">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <img class="img-thumbnail" src="" alt="Generic placeholder image" height="170" width="170">
+                                        <p>
+                                            Here you can find your food  
+                                        </p>
+                                        <h2>
+                                            Text
+                                        </h2>
+                                        <p class="resAddress" class="form-control" id="recipient-name">
+                                           <strong> Address: </strong> 
+                                        </p>
+                                    </div>             
+                                 </div>  
+                                </div>   
+                        </div>
+                          
+                           
+                      </div>  
+                      </div>
+                    </div>
+       
+                  
     </div>
     </div>  
     
