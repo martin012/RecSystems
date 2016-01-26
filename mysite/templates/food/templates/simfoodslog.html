@@ -45,14 +45,12 @@
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
-          <form class="navbar-form navbar-right"  action="user_view" method="post"> {% csrf_token %}
-            <div class="form-group">
-              <input type="text" id="username" name="username" placeholder="Username" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" id="password" name="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
+          <form class="navbar-form navbar-right" action="show_all_foods" method="POST"  id="post-form2"> {% csrf_token %}
+                <button type="submit" class="btn btn-success">Show all foods!</button>
+          </form>   
+           
+          <form class="navbar-form navbar-right"  action="logout_view" > {% csrf_token %}
+              <button type="submit" class="btn btn-success">Logout</button>
           </form>  
         </div><!--/.nav-collapse -->
       </div>
@@ -68,26 +66,29 @@
         <div class="row">
         {% for food in list %} 
            
-            <div class="col-md-4">  
-                <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image"  height="170" width="170">
+             <div class="col-md-4">  
+                <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image" height="170" width="170">
                 <h2 >{{ food.food_name }}</h2>       
                       <div>
                           {% for tag in food.tag_set.all %}
                                <span class="label label-default">{{ tag.tag_name }}</span>
                           {% endfor %}
                       </div>
-                <h5>{{ food.restaurant.restaurant_name }}</h5>
-                <input id="input-22" value="{{food.food_rating}}" data-readonly="true" type="number" class="rating" min=0 max=5 step=0.1 data-size="xs" >
-                 <div class="row">  
-                <button type="button"   class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-sim_food="{{sim_foods}}" data-food_name="{{food.food_name}}" data-food_image="{{food.food_photo.url}}" data-restaurant_image="{{food.restaurant.restaurant_photo.url}}" data-restaurant_address="{{food.restaurant.restaurant_address}}" data-restaurant_name="{{food.restaurant.restaurant_name}}">    
+                <p>{{ food.restaurant.restaurant_name }}</p>
+                <form class="rate" action="rate_food" method="POST"  id="post-form"> {% csrf_token %}
+                <input id="input-22" value="{{food.food_rating}}"  type="number" class="rating" min=0 max=5 step=0.1 data-size="xs" >
+                <input type="hidden" value="{{food.id}}" name="in-food">
+                <input type="hidden" value="" name="in-rating" class="in-rating">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-food_name="{{food.food_name}}" data-food_image="{{food.food_photo.url}}" data-restaurant_image="{{food.restaurant.restaurant_photo.url}}" data-restaurant_address="{{food.restaurant.restaurant_address}}" data-restaurant_name="{{food.restaurant.restaurant_name}}">    
                    View details &raquo;
                 </button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
                 <form action="similar_foods" method="post" id="post-sim-food"> {% csrf_token %}
                     <input type="hidden" value="{{food.id}}" name="in-food">
                     <button type="submit" class="btn btn-primary">Similar Foods &raquo;</button>
                 </form>
-                </div>
-            </div>   
+            </div>
             
         {% endfor %}
           </div>
@@ -113,7 +114,7 @@
 <script src="http://plugins.krajee.com/assets/ec92c13a/js/select2-krajee.min.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {   
+    $(document).ready(function () {  
             $("#myModal").on('show.bs.modal', function(event){
                 var button = $(event.relatedTarget);  // Button that triggered the modal
                 var food_name = button.data('food_name'); // Extract value from data-* attributes

@@ -68,7 +68,7 @@
 
         {% for food in list %} 
             <div class="col-md-4">  
-                <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image">
+                <img class="img-rounded" src="{{ food.food_photo.url }}" alt="Generic placeholder image" height="170" width="170">
                 <h2 >{{ food.food_name }}</h2>       
                       <div>
                           {% for tag in food.tag_set.all %}
@@ -83,6 +83,11 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-food_name="{{food.food_name}}" data-food_image="{{food.food_photo.url}}" data-restaurant_image="{{food.restaurant.restaurant_photo.url}}" data-restaurant_address="{{food.restaurant.restaurant_address}}" data-restaurant_name="{{food.restaurant.restaurant_name}}">    
                    View details &raquo;
                 </button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <form action="similar_foods" method="post" id="post-sim-food"> {% csrf_token %}
+                    <input type="hidden" value="{{food.id}}" name="in-food">
+                    <button type="submit" class="btn btn-primary">Similar Foods &raquo;</button>
                 </form>
             </div>         
         {% endfor %}
@@ -117,30 +122,7 @@
                                  </div>  
                                 </div>   
                         </div>
-                          
-                            <div class="modal-footer">
-                            <h4 style="text-align:center; margin-bottom:30px;">You can be also interest in:</h4>       
-                            <div class="container marketing">
-                             <div class="row">   
-                                {% for food1 in list %} 
-                                <div class="col-sm-4">
-                                    <img class="img-rounded" src="{{ food1.food_photo.url }}" alt="Generic placeholder image" height="150" width="150">
-                                    <h4>{{ food1.food_name }}</h4>
-                                    <div>
-                                         {% for tag in food1.tag_set.all %}
-                                             <span class="label label-default">{{ tag.tag_name }}</span>
-                                         {% endfor %}
-                                    </div>
-                                    <h5>{{ food1.restaurant.restaurant_name }}</h5>
-                                    <p>
-                                         Address: {{food1.restaurant.restaurant_address}} 
-                                    </p> 
-                                    <input id="input-21" value="{{food1.food_rating}}" type="number" class="rating" min=0 max=5 step=0.1 data-size="xs" >
-                                 </div>
-                                {% endfor %} 
-                              </div>
-                          </div>
-                        </div>
+                        
                       </div>  
                       </div>
                     </div>

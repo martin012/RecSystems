@@ -68,11 +68,17 @@ def show_all_foods(request):
             return render(request, 'food/templates/allfoods.html', {'list': list_of_foods, 'STATIC_PICS' : settings.STATIC_PICS })
         
 def similar_foods(request):
+    if request.user.is_authenticated():
         if request.POST:   
             food = request.POST['in-food']
             food1 = Food.objects.get(id = food)
             list_of_foods = sim_item_tags(food1)
-            return render(request, 'food/templates/simfoods.html', {'food': food1, 'list': list_of_foods, 'STATIC_PICS' : settings.STATIC_PICS })          
+            return render(request, 'food/templates/simfoodslog.html', {'food': food1, 'list': list_of_foods, 'STATIC_PICS' : settings.STATIC_PICS })          
+    else: 
+        food = request.POST['in-food']
+        food1 = Food.objects.get(id = food)
+        list_of_foods = sim_item_tags(food1)
+        return render(request, 'food/templates/simfoods.html', {'food': food1, 'list': list_of_foods, 'STATIC_PICS' : settings.STATIC_PICS })          
 
 def user_view(request):
     username = request.POST['username']
